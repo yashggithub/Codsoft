@@ -1,0 +1,94 @@
+https://github.com/yashggithub/Codsoft.git
+#include <iostream>
+
+#include <vector>
+#include <string>
+using namespace std;
+struct Task {
+    string description;
+    bool completed;
+};
+void displayMenu() {
+    cout << "\n" << "To-Do List Manager" <<"\n";
+    cout << "1. Add Task" <<"\n";
+    cout << "2. View Tasks" <<"\n";
+    cout << "3. Mark Task as Completed" <<"\n";
+    cout << "4. Remove Task" <<"\n";
+    cout << "5. Exit" <<"\n";
+    cout << "Choose an option (1-5): ";
+}
+void addTask(vector<Task>& tasks) {
+    string description;
+    cout << "Enter the Task Description: ";
+    cin.ignore();
+    getline(cin, description);
+    tasks.push_back({description, false});
+    cout << "Task Added Successfully." <<"\n";
+}
+void viewTasks(const vector<Task>& tasks) {
+    if (tasks.empty()) {
+        cout << "No Tasks to Display." <<"\n";
+        return;
+    }
+    cout << "\nTask List:" <<"\n";
+    for (size_t i = 0; i < tasks.size(); ++i) {
+        cout << i + 1 << ". " << tasks[i].description
+             << (tasks[i].completed ? " [Completed]" : " [Pending]") << endl;
+    }
+}
+
+void markTaskAsCompleted(vector<Task>& tasks) {
+    viewTasks(tasks);
+    int taskNumber;
+    cout << "Enter the Task Number to Mark as Completed: ";
+    cin >> taskNumber;
+    if (taskNumber < 1 || taskNumber > static_cast<int>(tasks.size())) {
+        cout << "Invalid Task Number." <<"\n";
+        return;
+    }
+    tasks[taskNumber - 1].completed = true;
+    cout << "Task Marked as Completed." <<"\n";
+}
+void removeTask(vector<Task>& tasks) {
+    viewTasks(tasks);
+    int taskNumber;
+    cout << "Enter The Task Number to Remove: ";
+    cin >> taskNumber;
+    if (taskNumber < 1 || taskNumber > static_cast<int>(tasks.size())) {
+        cout << "Invalid Task Number." <<"\n";
+        return;
+    }
+    tasks.erase(tasks.begin() + taskNumber - 1);
+    cout << "Task Removed Successfully." <<"\n";
+}
+int main() {
+    vector<Task> tasks;
+    int choice;
+    do {
+        displayMenu();
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                addTask(tasks);
+                break;
+            case 2:
+                viewTasks(tasks);
+                break;
+            case 3:
+                markTaskAsCompleted(tasks);
+                break;
+            case 4:
+                removeTask(tasks);
+                break;
+            case 5:
+                cout << "Exiting Program." <<"\n";
+                break;
+            default:
+                cout << "Invalid choice." << "\n" <<"Please choose again." <<"\n";
+                break;
+        }
+    } while (choice != 5);
+
+    return 0;
+}
