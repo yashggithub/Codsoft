@@ -1,6 +1,4 @@
-https://github.com/yashggithub/Codsoft.git
 #include <iostream>
-
 #include <vector>
 #include <string>
 using namespace std;
